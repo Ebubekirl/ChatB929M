@@ -108,7 +108,7 @@ def create_room():
             message = "Kayıtlı Olmayan Kullanıcı"
             print(message)
 
-    return render_template("create_room.html", server_ip="http://51.20.18.166:5000/")
+    return render_template("create_room.html", server_ip="http://16.171.152.178:5000/")
 
 @app.route('/rooms/<room_id>/delete', methods=['POST'])
 def delete_room(room_id):
