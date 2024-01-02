@@ -203,7 +203,7 @@
     </div>
 
     <script>
-        const socket = io.connect("http://16.171.152.178:5000");
+        const socket = io.connect("http://16.171.152.178:5000/");
         socket.on('connect', function () {
             socket.emit('join_room', {
                 username: "{{username}}",
@@ -276,15 +276,9 @@
         socket.on('join_room_announcement', function (data) {
             if (data.username !== "{{ username }}") {
                 const newNode = document.createElement('div');
-                newNode.innerHTML = `<b>${data.username}</b> Odaya katıldı`;
+                newNode.innerHTML = `<b>${data.username}</b> Çevrimiçi Oldu`;
                 document.getElementById('messages').appendChild(newNode);
             }
-        });
-
-        socket.on('leave_room_announcement', function (data) {
-            const newNode = document.createElement('div');
-            newNode.innerHTML = `<b>${data.username}</b> Odadan ayrıldı`;
-            document.getElementById('messages').appendChild(newNode);
         });
 
         socket.on('room_deleted', function (data) {
@@ -303,7 +297,7 @@
                         alert("Oda başarıyla silindi.");
                         window.location.href =  window.location.protocol + '//' + document.domain + ':' + location.port;
                     } else {
-                        alert("Oda silinirken bir hata oluştu.");
+                        alert("Odayı silmek için yetkiniz yok.");
                     }
                 });
             }
