@@ -101,7 +101,7 @@
         top: 20px;
         left: 20px;
         overflow-y: auto; /* Üyeler listesi için scroll ekleniyor */
-        max-height: 150px; /* Görüntülenecek maksimum yükseklik */
+        max-height: 200px; /* Görüntülenecek maksimum yükseklik */
         }
         /* Scroll çubuğu stilleri */
         .members-container::-webkit-scrollbar {
@@ -205,7 +205,7 @@
     <script>
         const socket = io.connect("http://16.171.152.178:5000/");
         socket.on('connect', function () {
-            socket.emit('join_room', {
+            socket.emit('join_room',{
                 username: "{{username}}",
                 room: "{{room[0]}}"
             });
@@ -259,13 +259,6 @@
             messages_div.insertBefore(newNode, messages_div.firstChild);
         }
 
-        window.onbeforeunload = function () {
-            socket.emit('leave_room', {
-                username: "{{ username }}",
-                room: "{{room[0]}}"
-            });
-        };
-
         socket.on('receive_message', function (data) {
             const newNode = document.createElement('div');
             newNode.innerHTML = `<b>${data.username}&nbsp;[${data.created_at}]:&nbsp;</b> ${data.message}`;
@@ -276,7 +269,7 @@
         socket.on('join_room_announcement', function (data) {
             if (data.username !== "{{ username }}") {
                 const newNode = document.createElement('div');
-                newNode.innerHTML = `<b>${data.username}</b> Çevrimiçi Oldu`;
+                newNode.innerHTML = `<b>${data.username}</b> Çevrimiçi oldu`;
                 document.getElementById('messages').appendChild(newNode);
             }
         });

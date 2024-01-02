@@ -39,8 +39,6 @@ CREATE TABLE `messages` (
 -- Tablo döküm verisi `messages`
 --
 
-INSERT INTO `messages` (`id`, `room_id`, `text`, `sender`, `created_at`) VALUES
-
 -- --------------------------------------------------------
 
 --
@@ -57,8 +55,6 @@ CREATE TABLE `rooms` (
 --
 -- Tablo döküm verisi `rooms`
 --
-
-INSERT INTO `rooms` (`id`, `name`, `created_by`, `created_at`) VALUES
 
 -- --------------------------------------------------------
 
@@ -79,8 +75,6 @@ CREATE TABLE `room_members` (
 -- Tablo döküm verisi `room_members`
 --
 
-INSERT INTO `room_members` (`room_id`, `username`, `room_name`, `added_by`, `added_at`, `is_room_admin`) VALUES
-
 -- --------------------------------------------------------
 
 --
@@ -98,7 +92,6 @@ CREATE TABLE `users` (
 -- Tablo döküm verisi `users`
 --
 
-INSERT INTO `users` (`id`, `username`, `email`, `password`) VALUES
 --
 -- Dökümü yapılmış tablolar için indeksler
 --
