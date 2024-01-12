@@ -66,10 +66,10 @@ mycursor.execute("""
 def save_user(username, email, password):
     
     try:
-        # Şifreyi güvenli bir şekilde hashle
+        
         pasword_hash = generate_password_hash(password)
 
-        # Kullanıcıyı veritabanına ekle
+        
         mycursor.execute("""
             INSERT INTO users (username, email, password)
             VALUES (%s, %s, %s)
@@ -115,12 +115,12 @@ def save_room(room_name,created_by):
     room_id = None
     
     try:
-        # Kullanıcı kontrolü
+        
         user = get_user(created_by)
         if not user:
             raise ValueError("Kullanıcı bulunamadı veya geçersiz.")
 
-        # Odayı veritabanına ekle
+        
         created_at = datetime.now()
         mycursor.execute("""
             INSERT INTO rooms (name, created_by, created_at)
@@ -139,13 +139,13 @@ def save_room(room_name,created_by):
 
 def delete_room_and_members(room_id):
     try:
-        # Odaya ait üyelerin silinmesi
+        
         remove_room_members(room_id)
 
-        # Odaya ait mesajların silinmesi
+        
         delete_room_messages(room_id)
 
-        # Odayı veritabanından silme
+       
         mycursor.execute("""
             DELETE FROM rooms
             WHERE id = %s
@@ -155,7 +155,7 @@ def delete_room_and_members(room_id):
         print(f"Oda {room_id} Ve Üyeleri Başarıyla Silindi.")
     except mysql.connector.Error as e:
         print(f"Hata: {e}")
-        mydb.rollback()  # Hata durumunda geri alma işlemi yapılır
+        mydb.rollback()
 
 
 def remove_room_members(room_id):
@@ -169,9 +169,9 @@ def remove_room_members(room_id):
 
 def delete_room_messages(room_id):
     try:
-        global mycursor, mydb  # Eğer global değişkenler değilse bu satırı çıkarın
+        global mycursor, mydb
 
-        # Odaya ait mesajların silinmesi
+        
         mycursor.execute("""
             DELETE FROM messages
             WHERE room_id = %s
@@ -204,14 +204,14 @@ def get_room(room_id):
 
 def add_room_member(room_id, room_name, username, added_by, is_room_admin=False):
     try:
-        # Oda üyesini eklemek için INSERT sorgusu
+       
         added_at = datetime.now()
         mycursor.execute("""
             INSERT INTO room_members (room_id, username, room_name, added_by, added_at, is_room_admin)
             VALUES (%s, %s, %s, %s, %s, %s)
         """, (room_id, username, room_name, added_by, added_at, is_room_admin))
 
-        # Veritabanındaki değişiklikleri kaydetme
+        
         mydb.commit()
 
         print("Oda üyesi başarıyla eklendi.")
@@ -220,7 +220,7 @@ def add_room_member(room_id, room_name, username, added_by, is_room_admin=False)
 
 def add_room_members(room_id, room_name, usernames, added_by):
     try:
-        # Oda üyelerini eklemek için INSERT sorgusu
+        
         added_at = datetime.now()
         is_room_admin = False
 
@@ -229,11 +229,11 @@ def add_room_members(room_id, room_name, usernames, added_by):
             VALUES (%s, %s, %s, %s, %s, %s)
         """
 
-        # Her kullanıcı için INSERT işlemi gerçekleştir
+       
         for username in usernames:
             mycursor.execute(insert_query, (room_id, username, room_name, added_by, added_at, is_room_admin))
 
-        # Veritabanındaki değişiklikleri kaydetme
+       
         mydb.commit()
 
         print("Oda üyeleri başarıyla eklendi.")
@@ -372,7 +372,7 @@ def save_message(room_id, text, sender):
     try:
         date_time = datetime.now()
 
-        # Mesajı Base64 ile şifrele
+       
         encoded_message = base64.b64encode(text.encode()).decode()
 
         insert_query = """
@@ -386,7 +386,7 @@ def save_message(room_id, text, sender):
         print(f"HATA: {e}")
 
 
-message_fetch_limit=999999 # Sayfa başına gösterilecek mesaj sayısı
+message_fetch_limit=999999 
 
 def get_message(room_id,page=0):
     try: 
@@ -404,7 +404,7 @@ def get_message(room_id,page=0):
             if messages_data:
                 print(f"Mesaj bulundu, Oda={room_id}")
                 messages_data = [list(message) for message in messages_data]
-                # Mesajı Base64 şifresini çözümle
+               
                 for message in messages_data:
                     message[2] = base64.b64decode(message[2]).decode()
 
