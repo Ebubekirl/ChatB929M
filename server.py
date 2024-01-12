@@ -100,7 +100,7 @@ def create_room():
                 usernames.remove(session.get("username"))
             add_room_members(room_id, room_name, usernames, session.get("username"))
 
-            # Broadcast the room creation event to all clients
+            
             socketio.emit('room_created', {'roomId': room_id, 'roomName': room_name})
 
             return redirect(url_for('view_room', room_id=room_id))
@@ -116,11 +116,11 @@ def delete_room(room_id):
         return redirect("/login")
 
     if is_room_admin(room_id, session.get("username")):
-        # Yalnızca oda yöneticisi odayı silebilir
+        
         delete_room_messages(room_id)
         delete_room_and_members(room_id)
         
-        # Socket.io ile "room_deleted" mesajını istemcilere gönder
+       
         socketio.emit('room_deleted', {'roomId': room_id})
         
         return jsonify({"message": "Oda başarıyla silindi."}), 200
@@ -128,7 +128,7 @@ def delete_room(room_id):
         return jsonify({"error": "Bu işlemi gerçekleştirmek için yeterli izniniz yok."}), 403
 
 def delete_room_and_members(room_id):
-    # Odadaki tüm üyeleri kaldır
+    
     room_members = get_room_members(room_id)
     usernames = [member[1] for member in room_members]
     remove_room_members(room_id, usernames)
