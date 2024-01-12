@@ -62,7 +62,7 @@
             display: flex;
             flex-wrap: wrap;
             align-items: center;
-            justify-content: flex-end; /* Değişiklik: Formu sağa hizala */
+            justify-content: flex-end;
             width: 100%;
             max-width: 600px;
             margin-bottom: 20px;
@@ -73,7 +73,7 @@
             padding: 10px;
             border: 1px solid #ccc;
             border-radius: 4px;
-            margin-left: 10px; /* Değişiklik: Mesaj giriş kutusunu sağa kaydırma */
+            margin-left: 10px;
             color: #ccc;
             background-color: #333;
             font-size: 16px;
@@ -100,21 +100,21 @@
         position: absolute;
         top: 20px;
         left: 20px;
-        overflow-y: auto; /* Üyeler listesi için scroll ekleniyor */
-        max-height: 200px; /* Görüntülenecek maksimum yükseklik */
+        overflow-y: auto;
+        max-height: 200px;
         }
-        /* Scroll çubuğu stilleri */
+       
         .members-container::-webkit-scrollbar {
-        width: 12px; /* Dikey scroll çubuğu genişliği */
+        width: 12px;
         }
 
         .members-container::-webkit-scrollbar-thumb {
-        background-color: #333; /* Scroll çubuğu rengi */
-        border-radius: 10px; /* Scroll çubuğu kenar yarıçapı */
+        background-color: #333;
+        border-radius: 10px;
         }
 
         .members-container::-webkit-scrollbar-track {
-        background-color: #1a1a1a; /* Scroll çubuğu arka plan rengi */
+        background-color: #1a1a1a;
         }
 
         .other-people-container {
@@ -141,13 +141,13 @@
         }
     </style>
     <script>
-        // Sayfa yüklendiğinde scroll'u en altta tut
+        
         document.addEventListener("DOMContentLoaded", function () {
             var messagesDiv = document.getElementById("messages");
             messagesDiv.scrollTop = messagesDiv.scrollHeight;
         });
 
-        // Yeni mesaj eklendiğinde scroll'u en altta tut
+        
         function scrollToBottom() {
             var messagesDiv = document.getElementById("messages");
             messagesDiv.scrollTop = messagesDiv.scrollHeight;
